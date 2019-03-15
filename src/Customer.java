@@ -1,8 +1,12 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+
 public class Customer {
-    HashMap<String, Integer> PinNumbers = new HashMap<>();
+    private String fname;
+    private String lname;
+    private int acNumber;
+    private int pin;
+    private ArrayList<Account> accounts = new ArrayList<>();
 
-
-    public void check
+    
 }

@@ -1,10 +1,11 @@
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Bank {
     // declare scanner for input, and Hashmap for customer PIN's
     private static Scanner console = new Scanner(System.in);
-    HashMap<String, Integer> customers = new HashMap<>();
+    private static HashMap<Integer, String> customers = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -16,9 +17,10 @@ public class Bank {
                     createAccount();
                     break;
                 case(2):
-                    verifyAccount(pin);
+                    accessAccount(pin, number);
                     break;
                 case(3):
+                    System.out.println("Goodbye!");
                     exited = true;
                     break;
             }
@@ -26,11 +28,12 @@ public class Bank {
     }
 
     public Bank(){
+        // Friendly Greeting
         System.out.println("Welcome to The Untrustworthy Bank!\nPlease give us your money!\n\n");
-
     }
 
-    public static int menu(){
+    private static int menu(){
+        // basic dialog for the menu
         System.out.printf("%-10s\n%-10s\n%-10s",
                 "Enter 1 to create a new account",
                 "Enter 2 to access an existing account",
@@ -41,13 +44,42 @@ public class Bank {
         return response;
     }
 
-    public static void createAccount(){
-        System.out.print("Enter Your First Name: ");
-        String fname = console.nextLine();
+    private static void createAccount(){
+        // asks if you are a new customer
+        System.out.print("Enter 1 if you are a new Customer, 2 if not: ");
+        int choice = Integer.parseInt(console.nextLine());
 
-        System.out.print("Enter Your Last Name: ");
-        String lname = console.nextLine();
+        // collects info and creates a new account if you are new
+        if(choice == 1){
+            System.out.print("What is your First name?: ");
+            String fname = console.nextLine().strip();
 
-        System.out.print("Enter a PIN You would like to ");
+            System.out.print("What is your last name?: ");
+            String lname = console.nextLine().strip();
+
+            System.out.print("Enter a 4 digit PIN to protect your account: ");
+            int pin = Integer.parseInt(console.nextLine());
+
+            // set up pin access for new customer
+            String fullname = fname.concat(" ").concat(lname);
+            customers.put(pin, fullname);
+
+            // ship data off to Customer class
+
+        }
+        // asks for pin if you are not new then prints message
+        if(choice == 2){
+            System.out.print("Enter Your pin Number: ");
+            int attempt = Integer.parseInt(console.nextLine());
+
+            Set c = customers.keySet();
+
+            if(c.contains(attempt)){
+                System.out.print("Welcome Back " + customers.get(attempt));
+                //TODO: add operation if exists
+            }else{
+                System.out.print("That didn't work try again!");
+            }
+        }
     }
 }
