@@ -27,6 +27,7 @@ public class Bank {
 
     public Bank(){
         System.out.println("Welcome to The Untrustworthy Bank!\nPlease give us your money!\n\n");
+
     }
 
     public static int menu(){
@@ -38,5 +39,15 @@ public class Bank {
         int response = Integer.parseInt(console.nextLine());
 
         return response;
+    }
+
+    public static void createAccount(){
+        System.out.print("Enter Your First Name: ");
+        String fname = console.nextLine();
+
+        System.out.print("Enter Your Last Name: ");
+        String lname = console.nextLine();
+
+        System.out.print("Enter a PIN You would like to ");
     }
 }
