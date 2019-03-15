@@ -8,5 +8,5 @@ public class Customer {
     private int pin;
     private ArrayList<Account> accounts = new ArrayList<>();
 
-    
+
 }

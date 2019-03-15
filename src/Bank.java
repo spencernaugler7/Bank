@@ -27,10 +27,12 @@ public class Bank {
         }
     }
 
+
     public Bank(){
         // Friendly Greeting
         System.out.println("Welcome to The Untrustworthy Bank!\nPlease give us your money!\n\n");
     }
+
 
     private static int menu(){
         // basic dialog for the menu
@@ -43,6 +45,7 @@ public class Bank {
 
         return response;
     }
+
 
     private static void createAccount(){
         // asks if you are a new customer
@@ -67,19 +70,26 @@ public class Bank {
             // ship data off to Customer class
 
         }
+
         // asks for pin if you are not new then prints message
         if(choice == 2){
             System.out.print("Enter Your pin Number: ");
             int attempt = Integer.parseInt(console.nextLine());
 
             Set c = customers.keySet();
+            boolean success = false;
 
-            if(c.contains(attempt)){
-                System.out.print("Welcome Back " + customers.get(attempt));
-                //TODO: add operation if exists
-            }else{
-                System.out.print("That didn't work try again!");
+            while(!success) {
+                if (c.contains(attempt)) {
+                    success = true;
+                    System.out.print("Welcome Back " + customers.get(attempt));
+                    //TODO: add operation if exists
+                } else {
+                    System.out.print("That didn't work try again!");
+                }
             }
         }
     }
+
+    
 }
