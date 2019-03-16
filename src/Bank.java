@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
@@ -5,10 +6,11 @@ import java.util.Set;
 public class Bank {
     // declare scanner for input, and Hashmap for customer PIN's
     private static Scanner console = new Scanner(System.in);
-    private static HashMap<Integer, String> customers = new HashMap<>();
+    private static HashMap<Integer, String> verification = new HashMap<>();
+    private static ArrayList<Customer> customers = new ArrayList<>();
 
     public static void main(String[] args) {
-
+        // main menu loop
         boolean exited = false;
         while(!exited){
 
@@ -54,6 +56,7 @@ public class Bank {
 
         // collects info and creates a new account if you are new
         if(choice == 1){
+            //collects info for customer creation
             System.out.print("What is your First name?: ");
             String fname = console.nextLine().strip();
 
@@ -65,10 +68,11 @@ public class Bank {
 
             // set up pin access for new customer
             String fullname = fname.concat(" ").concat(lname);
-            customers.put(pin, fullname);
+            verification.put(pin, fullname);
 
             // ship data off to Customer class
-
+            Customer newCustomer = new Customer(fname, lname);
+            customers.add(newCustomer);
         }
 
         // asks for pin if you are not new then prints message
@@ -76,13 +80,13 @@ public class Bank {
             System.out.print("Enter Your pin Number: ");
             int attempt = Integer.parseInt(console.nextLine());
 
-            Set c = customers.keySet();
+            Set c = verification.keySet();
             boolean success = false;
 
             while(!success) {
                 if (c.contains(attempt)) {
                     success = true;
-                    System.out.print("Welcome Back " + customers.get(attempt));
+                    System.out.print("Welcome Back " + verification.get(attempt));
                     //TODO: add operation if exists
                 } else {
                     System.out.print("That didn't work try again!");
@@ -90,6 +94,4 @@ public class Bank {
             }
         }
     }
-
-    
 }
