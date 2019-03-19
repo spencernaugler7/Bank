@@ -1,8 +1,11 @@
 public abstract class Account {
-    protected static int acNum;
+    protected static int numAccounts;
+    protected int balence;
+    protected int aNumber;
 
-    @Override
-    public String toString(){
-
+    protected int getNumAccounts(){
+        return numAccounts;
     }
+
+
 }
