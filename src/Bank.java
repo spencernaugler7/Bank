@@ -7,23 +7,23 @@ public class Bank
 {
     // declare scanner for input, and Hashmap for customer PIN's
     private static Scanner console = new Scanner(System.in);
-    private static HashMap<Integer, String> verification = new HashMap<>();
-    private static ArrayList<Customer> customers = new ArrayList<>();
+    private static HashMap<Integer, Customer> customers = new HashMap<>();
 
     public static void main(String[] args)
     {
+        System.out.println("Welcome to the national bank of You don't own your money!");
         // main menu loop
         boolean exited = false;
         while(!exited){
-
+            System.out.println("=====Main Menu=====");
             switch(menu()){
-                case(1):
-                    createAccount();
+                case 1:
+                    newAccount();
                     break;
-                case(2):
+                case 2:
                     accessAccount(pin, number);
                     break;
-                case(3):
+                case 3:
                     System.out.println("Goodbye!");
                     exited = true;
                     break;
@@ -31,84 +31,73 @@ public class Bank
         }
     }
 
-
-    public Bank()
-    {
-        // Friendly Greeting
-        System.out.println("Welcome to The Untrustworthy Bank!\nPlease give us your money!\n\n");
-    }
-
-
-    private static int menu()
-    {
+    private static int menu(){
         // basic dialog for the menu
         System.out.printf("%-10s\n%-10s\n%-10s",
                 "Enter 1 to create a new account",
                 "Enter 2 to access an existing account",
                 "Enter 3 to exit the program");
 
-        int response = Integer.parseInt(console.nextLine());
-
-        return response;
+        return Integer.parseInt(console.nextLine());
     }
 
 
-    private static void createAccount()
-    {
+    private static void newAcount(){
         // asks if you are a new customer
         System.out.print("Enter 1 if you are a new Customer, 2 if not: ");
         int choice = Integer.parseInt(console.nextLine());
 
         // collects info and creates a new account if you are new
-        if(choice == 1)
-        {
-            //collects info for customer creation
-            System.out.print("What is your First name?: ");
-            String fname = console.nextLine().strip();
+        boolean done = false;
+        while(!done){
+            switch(choice){
+                case 1:
+                    //collects info for customer creation
+                    System.out.print("What is your First name?: ");
+                    String fname = console.nextLine().strip();
 
-            System.out.print("What is your last name?: ");
-            String lname = console.nextLine().strip();
+                    System.out.print("What is your last name?: ");
+                    String lname = console.nextLine().strip();
 
-            System.out.print("Enter a 4 digit PIN to protect your account: ");
-            int pin = Integer.parseInt(console.nextLine());
+                    System.out.print("Enter a 4 digit PIN to protect your account: ");
+                    int pin = Integer.parseInt(console.nextLine());
 
-            // set up pin access for new customer
-            String fullname = fname.concat(" ").concat(lname);
-            verification.put(pin, fullname);
+                    // ship data off to Customer class
+                    Customer newCustomer = new Customer(fname, lname);
+                    customers.put(pin, newCustomer);
+                    done = true;
+                    //send customer over to customer class
+                    customers.get(pin).accountMenu();
+                    break;
+                case 2:
+                    Set c = customers.keySet();
+                    boolean verified = false;
+                    while(!verified) {
+                        System.out.print("Enter Your pin Number: ");
+                        int attempt = Integer.parseInt(console.nextLine());
+                        verified = verifyAccount(c, attempt);
+                    }
+                    done = true;
+                    break;
+                default:
+                    System.out.println("Either you did not enter a number\nor you did not enter 1 or 2");
+                    break;
+            } // switch ending
+        } // while ending
+    }// function ending
 
-            // ship data off to Customer class
-            Customer newCustomer = new Customer(fname, lname);
-            customers.add(newCustomer);
-        }
-
-        // asks for pin if you are returning else prints
-        if(choice == 2)
-        {
-            Set c = verification.keySet();
-            boolean test = false;
-            while(!test) {
-                System.out.print("Enter Your pin Number: ");
-                int attempt = Integer.parseInt(console.nextLine());
-
-                test = verifyAccount(c, attempt);
-            }
-        }
-    }
-
-    private static boolean verifyAccount(Set c, int attempt)
-    {
+    private static boolean verifyAccount(Set c, int attempt){
 
         if (c.contains(attempt))
         {
-            System.out.print("Welcome Back " + verification.get(attempt));
-            //TODO: make account if success
+            System.out.print("Success, Welcome Back " + customers.get(attempt).getName());
             return true;
         } else {
-            System.out.print("That didn't work, please try again,\nWe want your money!");
+            System.out.print("That didn't work, please try again.\nWe want your money!");
             return false;
         }
 
     }
 
+}// class ending
 
-}
