@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// TODO: finish editing done() so while loop will exit properly
-// TODO: make an account menu for an existing customer that wants to access their account
 public class Customer {
     private String fname;
     private String lname;
@@ -13,21 +11,22 @@ public class Customer {
     public Customer(String fname, String lname){
         this.fname = fname;
         this.lname = lname;
-        newAccount(fname, lname);
     }
 
     // makes a new account with the name
-    private void newAccount(String fname, String lname){
+    public void accountMenu(){
         System.out.println("Hello " + fname + " " + lname);
         boolean test = false;
         while(!test) {
-            System.out.println("=====New Account Maker=====");
-            System.out.println(" 1 to make checking" +
-                    "2 to make savings: ");
+            System.out.println("===== Account Menu =====");
+            System.out.println(" 1 to make checking\n" +
+                    "2 to make savings\n" +
+                    "3 to deposit money into an account\n" +
+                    "4 to withdraw money from an account");
             int choice = Integer.parseInt(console.nextLine());
 
             switch(choice){
-                case 1: 
+                case 1:
                     Savings newSavings = new Savings();
                     savingsAccounts.add(newSavings);
                     test = done();
@@ -50,13 +49,10 @@ public class Customer {
         int choice = Integer.parseInt(console.nextLine());
         switch(choice){
             case 1: return true;
-                break;
             case 2: return false;
-                break;
             default:
                 System.out.println("Either you did not enter 1 or 2 or you did not enter a number");
                 return false;
-                break;
         }
     }
 
@@ -66,7 +62,7 @@ public class Customer {
     }
 
     // prints off all toString methods of all accounts
-    public void listAccounts(){
+    public void listAllAccounts(){
         // each account will have a public toString method that will have this handled
         System.out.println("Checking Accounts");// checking acounts
         for(Checking checking : checkingAccounts){
@@ -76,10 +72,5 @@ public class Customer {
         for(Savings savings : savingsAccounts){
             System.out.println(savings);
         }
-    }
-
-    // for an existing customer to access their account
-    public void accountMenu(){
-
     }
 }

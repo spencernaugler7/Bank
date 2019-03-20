@@ -1,7 +1,8 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
+
+//TODO: add functionalilty for a returning customer
 
 public class Bank
 {
@@ -15,13 +16,13 @@ public class Bank
         // main menu loop
         boolean exited = false;
         while(!exited){
-            System.out.println("=====Main Menu=====");
+            System.out.println("===== Main Menu =====");
             switch(menu()){
                 case 1:
                     newAccount();
                     break;
                 case 2:
-                    accessAccount(pin, number);
+
                     break;
                 case 3:
                     System.out.println("Goodbye!");
@@ -42,7 +43,8 @@ public class Bank
     }
 
 
-    private static void newAcount(){
+    private static void newAccount(){
+
         // asks if you are a new customer
         System.out.print("Enter 1 if you are a new Customer, 2 if not: ");
         int choice = Integer.parseInt(console.nextLine());
@@ -62,12 +64,10 @@ public class Bank
                     System.out.print("Enter a 4 digit PIN to protect your account: ");
                     int pin = Integer.parseInt(console.nextLine());
 
-                    // ship data off to Customer class
-                    Customer newCustomer = new Customer(fname, lname);
-                    customers.put(pin, newCustomer);
+                    Customer newCustomer = new Customer(fname, lname); // ship data off to Customer class
+                    customers.put(pin, newCustomer); // sets up verification
+                    customers.get(pin).accountMenu(); //accountMenu is an other loop that has an account menu
                     done = true;
-                    //send customer over to customer class
-                    customers.get(pin).accountMenu();
                     break;
                 case 2:
                     Set c = customers.keySet();
