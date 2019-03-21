@@ -22,7 +22,16 @@ public class Bank
                     newAccount();
                     break;
                 case 2:
+                    Set c = Set.keySet(customers);
+                    boolean verified = false;
+                    while(!verified){
+                        System.out.print("Enter PIN number: ");
+                        int attempt = Integer.parseInt(console.nextLine());
+                        verifed = verifyAccount(c, attempt);
 
+                        if(verifed)
+                            customers.get(attempt).accountMenu();
+                    }
                     break;
                 case 3:
                     System.out.println("Goodbye!");
@@ -46,7 +55,7 @@ public class Bank
     private static void newAccount(){
 
         // asks if you are a new customer
-        System.out.print("Enter 1 if you are a new Customer, 2 if not: ");
+        System.out.println("Enter 1 if you are a new Customer\n2 if returning\n3 to exit back to menu");
         int choice = Integer.parseInt(console.nextLine());
 
         // collects info and creates a new account if you are new
@@ -66,21 +75,25 @@ public class Bank
 
                     Customer newCustomer = new Customer(fname, lname); // ship data off to Customer class
                     customers.put(pin, newCustomer); // sets up verification
-                    customers.get(pin).accountMenu(); //accountMenu is an other loop that has an account menu
                     done = true;
+                    customers.get(pin).accountMenu(); //accountMenu is an other loop that has an account menu
                     break;
-                case 2:
+                case 2: // if returning customer redirect to the same menu just with pin verification
                     Set c = customers.keySet();
                     boolean verified = false;
                     while(!verified) {
                         System.out.print("Enter Your pin Number: ");
                         int attempt = Integer.parseInt(console.nextLine());
                         verified = verifyAccount(c, attempt);
+                        if(verified)
+                            customers.get(attempt).accountMenu();
                     }
+                    break;
+                case 3:
                     done = true;
                     break;
                 default:
-                    System.out.println("Either you did not enter a number\nor you did not enter 1 or 2");
+                    System.err.println("verifyAccount did not work for some reason");
                     break;
             } // switch ending
         } // while ending
@@ -90,7 +103,7 @@ public class Bank
 
         if (c.contains(attempt))
         {
-            System.out.print("Success, Welcome Back " + customers.get(attempt).getName());
+            System.out.print("Success, Welcome Back " + customers.get(attempt).getFName());
             return true;
         } else {
             System.out.print("That didn't work, please try again.\nWe want your money!");
