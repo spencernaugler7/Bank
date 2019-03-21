@@ -6,7 +6,7 @@ public abstract class Account {
     protected int aNumber;
     protected String name;
 
-    protected int getNumAccounts(){
+    protected static int getNumAccounts(){
         return numAccounts;
     }
 

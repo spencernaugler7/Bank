@@ -22,14 +22,14 @@ public class Bank
                     newAccount();
                     break;
                 case 2:
-                    Set c = Set.keySet(customers);
+                    Set c = Set.;
                     boolean verified = false;
                     while(!verified){
                         System.out.print("Enter PIN number: ");
                         int attempt = Integer.parseInt(console.nextLine());
-                        verifed = verifyAccount(c, attempt);
+                        verified = verifyAccount(c, attempt);
 
-                        if(verifed)
+                        if(verified)
                             customers.get(attempt).accountMenu();
                     }
                     break;
@@ -65,10 +65,10 @@ public class Bank
                 case 1:
                     //collects info for customer creation
                     System.out.print("What is your First name?: ");
-                    String fname = console.nextLine().strip();
+                    String fname = console.nextLine().trim();
 
                     System.out.print("What is your last name?: ");
-                    String lname = console.nextLine().strip();
+                    String lname = console.nextLine().trim();
 
                     System.out.print("Enter a 4 digit PIN to protect your account: ");
                     int pin = Integer.parseInt(console.nextLine());
