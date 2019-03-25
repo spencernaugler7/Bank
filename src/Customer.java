@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 // TODO: finish withdrawing and deposition functionality
+// TODO: work on withdraw and deposit
 
 public class Customer {
     private String fname;
@@ -29,28 +30,30 @@ public class Customer {
 
             switch(choice){
                 case 1:
-
+                    Account newChecking = new Checking();
+                    Accounts.add(newChecking);
                 case 2:
-
+                    Account newSavings = new Savings();
+                    Accounts.add(newSavings);
                 case 3:
-                    if(!noAccounts()) {
-                        int aNum = getAcInput();
-                        int search = searchForAccount(aNum);
-                        if(search == -1){
-                            System.out.println("That account doesn't exits");
-                            break;
-                        }else{
-                            System.out.print("Enter the amount you would like to deposit: ");
-                            double amount = Double.parseDouble(console.nextLine());
-                            Accounts.get(search).deposit(amount);
-                        }
+                    if(noAccounts()){
+                        System.out.println("You don't have any accounts created");
                     }else{
-                        System.out.println("you don't have any savings or checking accounts");
-                        break;
+                        int AccountNumber = getAccountNum();
+                        System.out.print("Enter the amount to deposit: ");
+                        double deposit = Double.parseDouble(console.nextLine());
+                        Accounts.get(AccountNumber).deposit(deposit);
                     }
 
                 case 4:
-                    int accountIndex
+                    if(noAccounts()){
+                        System.out.println("You don't have any accounts created");
+                    }else{
+                        int AccountNumber = getAccountNum();
+                        System.out.print("Enter the amount to Withdraw: ");
+                        double deposit = Double.parseDouble(console.nextLine());
+                        Accounts.get(AccountNumber).deposit(deposit);
+                    }
                     break;
                 case 5:
                     listAllAccounts();
@@ -71,8 +74,8 @@ public class Customer {
         return false;
     }
 
-    private int getAcInput(){
-        System.out.print("Enter the account number");
+    private int getAccountNum(){
+        System.out.print("Enter the account number: ");
         return Integer.parseInt(console.nextLine());
     }
 
@@ -100,7 +103,7 @@ public class Customer {
     public void listAllAccounts(){
         // each account will have a public toString method that will have this handled
 
-        System.out.println("Checking Accounts");// accounts
+        System.out.println("===== Accounts =====");// accounts are listed int the arraylist
         for(Object account : Accounts){
             System.out.println(account);
         }

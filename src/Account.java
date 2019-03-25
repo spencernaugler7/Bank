@@ -2,7 +2,7 @@
 // TODO: add functionality to open savings, and checking accounts
 public abstract class Account {
     protected static int numAccounts;
-    protected double balence;
+    protected double balance;
     protected int aNumber;
     protected String name;
 
@@ -10,16 +10,16 @@ public abstract class Account {
         return numAccounts;
     }
 
-    protected int getBalence(){
+    protected int getBalance(){
 
     }
 
-    protected void deposit(double ammount){
-    	balence += ammount;
+    protected void deposit(double amount){
+    	balance += amount;
     }
 
-    protected void widthdraw(double ammount){
-    	balence -= ammount;
+    protected void widthdraw(double amount){
+    	balance -= amount;
     }
 
     protected int getAcNumber(){ return aNumber;}

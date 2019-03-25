@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
-//TODO: add functionalilty for a returning customer
+//TODO: add functionality for a returning customer
 
 public class Bank
 {
@@ -12,7 +12,7 @@ public class Bank
 
     public static void main(String[] args)
     {
-        System.out.println("Welcome to the national bank of You don't own your money!");
+        System.out.println("Welcome to the national bank of give us your money!");
         // main menu loop
         boolean exited = false;
         while(!exited){
@@ -53,14 +53,12 @@ public class Bank
 
 
     private static void newAccount(){
-
-        // asks if you are a new customer
-        System.out.println("Enter 1 if you are a new Customer\n2 if returning\n3 to exit back to menu");
-        int choice = Integer.parseInt(console.nextLine());
-
-        // collects info and creates a new account if you are new
+        // main menu for my program
         boolean done = false;
         while(!done){
+            // asks if you are a new customer
+            System.out.println("Enter 1 if you are a new Customer\n2 if returning\n3 to exit back to menu");
+            int choice = Integer.parseInt(console.nextLine());
             switch(choice){
                 case 1:
                     //collects info for customer creation
@@ -93,7 +91,7 @@ public class Bank
                     done = true;
                     break;
                 default:
-                    System.err.println("verifyAccount did not work for some reason");
+                    System.err.println("You did not enter 1,2, or 3, or you did not enter a number");
                     break;
             } // switch ending
         } // while ending
