@@ -2,8 +2,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Set;
 
-//TODO: add functionality for a returning customer
-
 public class Bank {
     // declare scanner for input, and Hashmap for customer PIN's
     private static Scanner console = new Scanner(System.in);
@@ -13,19 +11,20 @@ public class Bank {
         menu();
     }
 
-    private void menu(){
+    private void menu(int choice){
         System.out.println("Welcome to the national bank of give us your money!");
 
         // main menu loop
         boolean done = false;
         while(!done){
+            // TODO: copy menu code and psvm into a new class an call this bank class
             System.out.println("===== Main Menu =====");
             System.out.printf("%-10s\n%-10s\n%-10s",
                     "Enter 1 to create a new account",
                     "Enter 2 to access an existing account",
                     "Enter 3 to exit the program\n");
             int response = Integer.parseInt(console.nextLine());
-            switch(response){
+            switch(choice){
                 case 1:
                     newAccount();
                     break;
