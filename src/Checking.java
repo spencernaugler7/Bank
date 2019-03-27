@@ -1,12 +1,22 @@
 public class Checking extends Account {
 
-    public Checking(double balence, String name){
-        numAccounts++;
-        super(balence, aNumber, name)
+    public Checking(double balance, int aNumber, String name){
+        super(balance, aNumber, name);
+    }
+
+    @Override
+    double getInterestRate(double amount){
+        if(balance < 10000){
+            return 0.02;
+        }else{
+            return 0.05;
+        }
     }
 
     @Override
     public String toString(){
-    	return String.format("Savings\n Account Number: %d\nName: %s\nBalence: %.2f\n", aNumber, name, balance);
+    	return String.format("Checking \nAccount Number: %d\nName: %s\nBalance: %.2f\n", aNumber, name, balance);
     }
+
+
 }

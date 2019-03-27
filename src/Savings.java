@@ -1,8 +1,16 @@
 public class Savings extends Account {
 
-    public Savings(double balence, String name){
-        numAccounts++;
-        super(balence, aNumber, name);
+    public Savings(double balance, int aNumber, String name) {
+        super(balance, aNumber, name);
+    }
+
+    @Override
+    double getInterestRate(double amount){
+        if(balance < 10000){
+            return 0.04;
+        }else{
+            return 0.07;
+        }
     }
 
     @Override

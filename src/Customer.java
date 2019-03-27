@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-// TODO: finish withdrawing and deposition functionality
-// TODO: work on withdraw and deposit
+import java.util.concurrent.ThreadLocalRandom;
 
-public class Customer {
+class Customer {
     private static Scanner console = new Scanner(System.in);
 
     private String fname;
@@ -58,65 +57,105 @@ public class Customer {
         }
     }
 
+    private void newChecking() { // make a new checking account
+        System.out.print("Enter a name for the account: ");
+        String name = console.nextLine();
+        System.out.print("Enter an initial deposit (or 0 if you do not want an initial deposit: ");
+        double init = Double.parseDouble(console.nextLine());
+
+        // generate rand 5 digit num for account number
+        int rand_int = ThreadLocalRandom.current().nextInt(0,99999999);
+
+        // take info and make a new account
+        Checking newChecking = new Checking(init, rand_int, name);
+        Accounts.add(newChecking);
+        printNewAccount("Checking", name, rand_int, init, newChecking.getInterestRate(init));
+    }
+
+    private void newSavings(){
+        // collect usual info for new account but with initial deposit being higher
+        System.out.print("Enter a name for the account: ");
+        String name = console.nextLine();
+        // collect initial deposit that must be greater than $100
+        boolean done = false;
+        double init = 0;
+        while(!done){
+            System.out.print("Enter an initial deposit (it must be at least $100: ");
+            init = Double.parseDouble(console.nextLine());
+            if(init < 100) {
+                System.out.println("Nice Try but we can count to 100");
+            } else {
+                done = true;
+            }
+
+        }
+        // generate rand 5 digit num for account number
+        int rand_int = ThreadLocalRandom.current().nextInt(0,99999999);
+
+        // take info and make a new account
+        Savings newSavings = new Savings(init, rand_int, name);
+        Accounts.add(newSavings);
+        printNewAccount("Savings", name, rand_int, init, newSavings.getInterestRate(init));
+    }
+
+
+    private void printNewAccount(String type, String name, int rand_int, double balance, double intrest_rate){
+        System.out.printf("Success new %s account %s was created\n" +
+                "Account Number: %d\n" +
+                "Initial Balance: %.0f\n" +
+                "Interest Rate %%%.0f", type, name, rand_int, balance, intrest_rate * 100);
+    }
+
     private void makeWithdraw() {
         if(noAccounts()){
             System.out.println("You don't have any accounts created");
         }else{
             int AccountNumber = getAccountNum();
-            System.out.print("Enter the amount to Withdraw: ");
-            double deposit = Double.parseDouble(console.nextLine());
-            Accounts.get(AccountNumber).deposit(deposit);
+            if(searchForAccount(AccountNumber) != -1) {
+                System.out.print("Enter the amount to Withdraw: ");
+                double deposit = Double.parseDouble(console.nextLine());
+                Accounts.get(AccountNumber).deposit(deposit);
+            }else{
+                System.out.println("You did not enter the correct Account Number" +
+                        "or that account does not exist");
+            }
         }
     }
+
 
     private void makeDeposit() {
-        if(noAccounts()){
+        if (noAccounts()) {
             System.out.println("You don't have any accounts created");
-        }else{
+        } else {
             int AccountNumber = getAccountNum();
-            System.out.print("Enter the amount to Deposit: ");
-            double deposit = Double.parseDouble(console.nextLine());
-            Accounts.get(AccountNumber).deposit(deposit);
+            if (searchForAccount(AccountNumber) != -1) {
+                System.out.print("Enter the amount to Deposit: ");
+                double deposit = Double.parseDouble(console.nextLine());
+                Accounts.get(AccountNumber).deposit(deposit);
+            } else {
+                System.out.println("You did not enter the correct Account Number" +
+                        "or that account does not exist");
+            }
         }
     }
 
-    private void newSavings(){
-
+    private int getAccountNum() {
+        System.out.print("Enter the account number: ");
+        return Integer.parseInt(console.nextLine());
     }
 
-    private void newChecking() {
-
-    }
 
     private boolean noAccounts(){
         if(Accounts.size() == 0){
             return true;
-        }
-        return false;
-    }
-
-    private int getAccountNum(int acNum){
-        System.out.print("Enter the account number: ");
-        int acNum = Integer.parseInt(console.nextLine());
-        verify(acNum);
-        return Integer.parseInt(console.nextLine());
-    }
-
-    private void verify(int acNum) {
-        int attempt = searchForAccount(acNum);
-        if(attempt){
-            
+        }else {
+            return false;
         }
     }
 
-
-    // used in Bank class to check for name
-    public String getFName(){
-        return fname.concat(" ").concat(lname);
-    }
-
-    // looks through accounts arraylist, for the account number entered, if found returns the index of that account
-    // if no account exists then it returns -1
+    /* used in Bank class to check for name
+     looks through accounts arraylist, for the account number entered, if found returns the index of that account
+     if no account exists then it returns -1*/
     private int searchForAccount(int acNum){
         for(int i = 0; i < Accounts.size(); i++){
             if (Accounts.get(i).getAcNumber() == acNum){
@@ -127,8 +166,10 @@ public class Customer {
         return -1;
     }
 
-    // returns the number of accounts in total
-    private int getNumAccounts(){ return Account.getNumAccounts();}
+
+    public String getFName(){
+        return fname.concat(" ").concat(lname);
+    }
 
     // prints off all toString methods of all accounts
     public void listAllAccounts(){
