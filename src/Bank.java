@@ -7,26 +7,21 @@ public class Bank {
     private static Scanner console = new Scanner(System.in);
     private static HashMap<Integer, Customer> customers = new HashMap<>();
 
-    public static void main(String[] args) {
-        menu();
-    }
-
-    private void menu(int choice){
+    public void menu(){
         System.out.println("Welcome to the national bank of give us your money!");
 
         // main menu loop
         boolean done = false;
         while(!done){
-            // TODO: copy menu code and psvm into a new class an call this bank class
             System.out.println("===== Main Menu =====");
             System.out.printf("%-10s\n%-10s\n%-10s",
-                    "Enter 1 to create a new account",
-                    "Enter 2 to access an existing account",
+                    "Enter 1 to create a new user",
+                    "Enter 2 to access an existing user",
                     "Enter 3 to exit the program\n");
             int response = Integer.parseInt(console.nextLine());
-            switch(choice){
+            switch(response){
                 case 1:
-                    newAccount();
+                    newCustomer();
                     break;
                 case 2:
                     accessAccount();
@@ -39,10 +34,13 @@ public class Bank {
         }
     }
 
+
     private void accessAccount() {
         Set c = customers.keySet();
         boolean verified = false;
         if(noCustomers()) {
+            System.out.println("There there are no users created!");
+        } else {
             while (!verified) {
                 System.out.print("Enter PIN number: ");
                 int attempt = Integer.parseInt(console.nextLine());
@@ -53,38 +51,11 @@ public class Bank {
         }
     }
 
+
     private boolean noCustomers(){
-        if(customers.size() == 0){
-            return true;
-        }else{
-            return false;
-        }
+        return customers.size() == 0;
     }
 
-    private void newAccount(){
-        // main menu for my program
-        boolean done = false;
-        while(!done){
-            // asks if you are a new customer
-            System.out.println("Enter 1 if you are a new Customer\n2 if returning\n3 to exit back to bank menu");
-            int choice = Integer.parseInt(console.nextLine());
-
-            switch(choice){
-                case 1:
-                    newCustomer();
-                    break;
-                case 2: // if returning customer redirect to the same menu just with pin verification
-                    accessAccount();
-                    break;
-                case 3:
-                    done = true;
-                    break;
-                default:
-                    System.err.println("You did not enter 1,2, or 3, or you did not enter a number");
-                    break;
-            } // switch ending
-        } // while ending
-    }// function ending
 
     private void newCustomer() {
         //collects info for customer creation
@@ -99,15 +70,15 @@ public class Bank {
 
         Customer newCustomer = new Customer(fname, lname); // ship data off to Customer class
         customers.put(pin, newCustomer); // sets up verification
-
-        customers.get(pin).accountMenu(); //account menu contains all of the account operations
+        System.out.println("Success User account created\nput 2 in the bank menu and enter your pin to access your portal");
     }
+
 
     private boolean verifyAccount(Set c, int attempt){
 
         if (c.contains(attempt))
         {
-            System.out.print("Success, Welcome Back " + customers.get(attempt).getFName());
+            System.out.print("Success, Welcome Back " + customers.get(attempt).getFName() +"\n" );
             return true;
         } else {
             System.out.print("That didn't work, please try again. 1We want your money!");

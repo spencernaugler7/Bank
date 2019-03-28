@@ -15,20 +15,18 @@ class Customer {
     }
 
     private int printMenu(){
-        System.out.println("===== "+ fname+"'s Account Menu =====");
-        System.out.println(" 1 to make checking\n" +
+        System.out.println("===== "+ fname+"'s User Menu =====");
+        System.out.println("1 to make checking\n" +
                 "2 to make savings\n" +
                 "3 to deposit money into an account\n" +
                 "4 to withdraw money from an account\n" +
-                "5 to list all accounts" +
+                "5 to list all accounts\n" +
                 "6 to exit back to bank menu");
         return Integer.parseInt(console.nextLine());
     }
 
     // makes a new account with the name
     public void accountMenu(){
-        System.out.println("Hello " + fname + " " + lname);
-
         boolean test = false;
         while(!test) {
             int choice = printMenu();
@@ -47,6 +45,7 @@ class Customer {
                     break;
                 case 5:
                     listAllAccounts();
+                    break;
                 case 6:
                     test = true;
                     break;
@@ -60,7 +59,7 @@ class Customer {
     private void newChecking() { // make a new checking account
         System.out.print("Enter a name for the account: ");
         String name = console.nextLine();
-        System.out.print("Enter an initial deposit (or 0 if you do not want an initial deposit: ");
+        System.out.print("Enter an initial deposit (or 0 if you do not want an initial deposit): ");
         double init = Double.parseDouble(console.nextLine());
 
         // generate rand 5 digit num for account number
@@ -74,13 +73,13 @@ class Customer {
 
     private void newSavings(){
         // collect usual info for new account but with initial deposit being higher
-        System.out.print("Enter a name for the account: ");
+        System.out.print("Enter a unique name for the account: ");
         String name = console.nextLine();
         // collect initial deposit that must be greater than $100
         boolean done = false;
         double init = 0;
         while(!done){
-            System.out.print("Enter an initial deposit (it must be at least $100: ");
+            System.out.print("Enter an initial deposit (it must be at least $100): ");
             init = Double.parseDouble(console.nextLine());
             if(init < 100) {
                 System.out.println("Nice Try but we can count to 100");
@@ -103,18 +102,20 @@ class Customer {
         System.out.printf("Success new %s account %s was created\n" +
                 "Account Number: %d\n" +
                 "Initial Balance: %.0f\n" +
-                "Interest Rate %%%.0f", type, name, rand_int, balance, intrest_rate * 100);
+                "Interest Rate %%%.0f\n", type, name, rand_int, balance, intrest_rate * 100);
     }
+
 
     private void makeWithdraw() {
         if(noAccounts()){
             System.out.println("You don't have any accounts created");
         }else{
             int AccountNumber = getAccountNum();
-            if(searchForAccount(AccountNumber) != -1) {
+            int index = searchForAccount(AccountNumber);
+            if(index != -1) {
                 System.out.print("Enter the amount to Withdraw: ");
                 double deposit = Double.parseDouble(console.nextLine());
-                Accounts.get(AccountNumber).deposit(deposit);
+                Accounts.get(index).withdraw(deposit);
             }else{
                 System.out.println("You did not enter the correct Account Number" +
                         "or that account does not exist");
@@ -128,10 +129,11 @@ class Customer {
             System.out.println("You don't have any accounts created");
         } else {
             int AccountNumber = getAccountNum();
-            if (searchForAccount(AccountNumber) != -1) {
+            int index = searchForAccount(AccountNumber);
+            if (index != -1) {
                 System.out.print("Enter the amount to Deposit: ");
                 double deposit = Double.parseDouble(console.nextLine());
-                Accounts.get(AccountNumber).deposit(deposit);
+                Accounts.get(index).deposit(deposit);
             } else {
                 System.out.println("You did not enter the correct Account Number" +
                         "or that account does not exist");
@@ -146,11 +148,7 @@ class Customer {
 
 
     private boolean noAccounts(){
-        if(Accounts.size() == 0){
-            return true;
-        }else {
-            return false;
-        }
+        return Accounts.size() == 0;
     }
 
     /* used in Bank class to check for name
@@ -174,10 +172,13 @@ class Customer {
     // prints off all toString methods of all accounts
     public void listAllAccounts(){
         // each account will have a public toString method that will have this handled
-
-        System.out.println("===== Accounts =====");// accounts are listed int the arraylist
-        for(Object account : Accounts){
-            System.out.println(account);
+        if(noAccounts()){
+            System.out.println("There are no accounts created");
+        } else {
+            System.out.println("===== Accounts =====");// accounts are listed int the arraylist
+            for(Object account : Accounts){
+                System.out.println(account);
+            }
         }
     }
 }

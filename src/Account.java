@@ -10,10 +10,6 @@ public abstract class Account {
         this.name = name;
     }
 
-    protected double getBalance(){
-        return balance;
-    }
-
     protected int getAcNumber(){ return aNumber;}
 
     // used in subclasses to determine interest rates
