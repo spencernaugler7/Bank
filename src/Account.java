@@ -4,18 +4,20 @@ public abstract class Account {
     protected int aNumber;
     protected String name;
 
-    public Account(double balance, int aNumber, String name){
+    public Account(double balance, int aNumber, String name)
+    {
         this.balance = balance;
         this.aNumber = aNumber;
         this.name = name;
     }
 
-    protected int getAcNumber(){ return aNumber;}
+    protected int getAcNumber(){ return aNumber; }
 
     // used in subclasses to determine interest rates
     abstract double getInterestRate(double amount);
 
-    public void deposit(double amount){
+    public void deposit (double amount)
+    {
         double interest_rate = getInterestRate(amount);
 
         double newAmount = amount * (1 + interest_rate);
@@ -26,16 +28,15 @@ public abstract class Account {
 
     }
 
-    protected void withdraw(double amount){
-        if( balance < amount){
+    protected void withdraw (double amount)
+    {
+        if ( balance < amount) {
             System.out.println("You don't have enough in your account to withdraw that");
-        }else{
+        } else {
             double newAmount = balance - amount;
             balance = newAmount;
             System.out.printf("Success you made a withdrawal of %.2f\n" +
                     "New balance: %.2f", amount, newAmount);
         }
-
     }
-
 }

@@ -30,6 +30,9 @@ public class Bank {
                     System.out.println("Goodbye! Thanks for your Money!");
                     done = true;
                     break;
+                default:
+                    System.out.println("You didn't enter 1, 2, or 3");
+                    break;
             }
         }
     }
@@ -70,7 +73,8 @@ public class Bank {
 
         Customer newCustomer = new Customer(fname, lname); // ship data off to Customer class
         customers.put(pin, newCustomer); // sets up verification
-        System.out.println("Success User account created\nput 2 in the bank menu and enter your pin to access your portal");
+        System.out.println("Success User account created\nput 2 in the bank"+
+            "menu and enter your pin to access your portal");
     }
 
 

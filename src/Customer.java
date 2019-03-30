@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-class Customer {
+class Customer
+{
     private static Scanner console = new Scanner(System.in);
 
     private String fname;
@@ -14,7 +15,8 @@ class Customer {
         this.lname = lname;
     }
 
-    private int printMenu(){
+    private int printMenu()
+    {
         System.out.println("===== "+ fname+"'s User Menu =====");
         System.out.println("1 to make checking\n" +
                 "2 to make savings\n" +
@@ -26,37 +28,39 @@ class Customer {
     }
 
     // makes a new account with the name
-    public void accountMenu(){
+    public void accountMenu()
+    {
         boolean test = false;
         while(!test) {
             int choice = printMenu();
             switch(choice){
-                case 1:
-                    newChecking();
-                    break;
-                case 2:
-                    newSavings();
-                    break;
-                case 3:
-                    makeDeposit();
-                    break;
-                case 4:
-                    makeWithdraw();
-                    break;
-                case 5:
-                    listAllAccounts();
-                    break;
-                case 6:
-                    test = true;
-                    break;
-                default:
-                    System.err.println("you either didn't enter a number or you you didn't enter 1 or 2");
-                    break;
+            case 1:
+                newChecking();
+                break;
+            case 2:
+                newSavings();
+                break;
+            case 3:
+                makeDeposit();
+                break;
+            case 4:
+                makeWithdraw();
+                break;
+            case 5:
+                listAllAccounts();
+                break;
+            case 6:
+                test = true;
+                break;
+            default:
+                System.err.println("you either didn't enter a number or you you didn't enter 1 or 2");
+                break;
             }
         }
     }
 
-    private void newChecking() { // make a new checking account
+    private void newChecking()
+    { // make a new checking account
         System.out.print("Enter a name for the account: ");
         String name = console.nextLine();
         System.out.print("Enter an initial deposit (or 0 if you do not want an initial deposit): ");
@@ -71,7 +75,8 @@ class Customer {
         printNewAccount("Checking", name, rand_int, init, newChecking.getInterestRate(init));
     }
 
-    private void newSavings(){
+    private void newSavings()
+    {
         // collect usual info for new account but with initial deposit being higher
         System.out.print("Enter a unique name for the account: ");
         String name = console.nextLine();
@@ -98,25 +103,27 @@ class Customer {
     }
 
 
-    private void printNewAccount(String type, String name, int rand_int, double balance, double intrest_rate){
+    private void printNewAccount(String type, String name, int rand_int, double balance, double interest_rate)
+    {
         System.out.printf("Success new %s account %s was created\n" +
                 "Account Number: %d\n" +
                 "Initial Balance: %.0f\n" +
-                "Interest Rate %%%.0f\n", type, name, rand_int, balance, intrest_rate * 100);
+                "Interest Rate %%%.0f\n", type, name, rand_int, balance, interest_rate * 100);
     }
 
 
-    private void makeWithdraw() {
-        if(noAccounts()){
+    private void makeWithdraw()
+    {
+        if (noAccounts()) {
             System.out.println("You don't have any accounts created");
-        }else{
+        } else {
             int AccountNumber = getAccountNum();
             int index = searchForAccount(AccountNumber);
-            if(index != -1) {
+            if (index != -1) {
                 System.out.print("Enter the amount to Withdraw: ");
                 double deposit = Double.parseDouble(console.nextLine());
                 Accounts.get(index).withdraw(deposit);
-            }else{
+            } else {
                 System.out.println("You did not enter the correct Account Number" +
                         "or that account does not exist");
             }
@@ -124,7 +131,8 @@ class Customer {
     }
 
 
-    private void makeDeposit() {
+    private void makeDeposit()
+    {
         if (noAccounts()) {
             System.out.println("You don't have any accounts created");
         } else {
@@ -141,7 +149,8 @@ class Customer {
         }
     }
 
-    private int getAccountNum() {
+    private int getAccountNum()
+    {
         System.out.print("Enter the account number: ");
         return Integer.parseInt(console.nextLine());
     }
@@ -154,7 +163,8 @@ class Customer {
     /* used in Bank class to check for name
      looks through accounts arraylist, for the account number entered, if found returns the index of that account
      if no account exists then it returns -1*/
-    private int searchForAccount(int acNum){
+    private int searchForAccount(int acNum)
+    {
         for(int i = 0; i < Accounts.size(); i++){
             if (Accounts.get(i).getAcNumber() == acNum){
                 return i;
@@ -172,10 +182,11 @@ class Customer {
     // prints off all toString methods of all accounts
     public void listAllAccounts(){
         // each account will have a public toString method that will have this handled
-        if(noAccounts()){
+        if (noAccounts()) {
             System.out.println("There are no accounts created");
         } else {
-            System.out.println("===== Accounts =====");// accounts are listed int the arraylist
+            System.out.println("===== " + fname + "'s Accounts =====");// accounts are listed int the arraylist
+            System.out.printf("%-20s%-20s%-20s%-20s\n", "Account Number", "Type", "Name", "Balance");
             for(Object account : Accounts){
                 System.out.println(account);
             }
